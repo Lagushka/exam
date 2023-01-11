@@ -7,9 +7,11 @@ import Header from '../../components/Header/Header';
 import Filter from '../../components/Filter/Filter';
 import upArrow from './static/up.svg';
 import downArrow from './static/down.svg';
+import Review from '../../components/Review/Review';
 
 export default function MainPage() {
   const [forms, setForms] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [filterOpened, setFilterOpened] = useState(false);
   const [questionsNum, setQuestionsNum] = useState(0);
   const [inputValue, setInputValue] = useState('');
@@ -21,6 +23,10 @@ export default function MainPage() {
         const buffer = [...response.data];
         buffer.sort((a, b) => a.name.localeCompare(b.name));
         setForms(buffer);
+      });
+    axios.get('https://my-json-server.typicode.com/lagushka/termworkDB/reviews/')
+      .then((response) => {
+        setReviews(response.data);
       });
   }, []);
 
@@ -45,7 +51,7 @@ export default function MainPage() {
           <input type="text" placeholder="Найти анкету" value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
           <button type="button" className="sort" onClick={() => sort()}>
             <span>Сортировка</span>
-            <img src={sortDown ? upArrow : downArrow} alt="" />
+            <img src={sortDown ? downArrow : upArrow} alt="" />
           </button>
         </div>
         {
@@ -65,6 +71,13 @@ export default function MainPage() {
                   {form.name}
                 </button>
               ))
+          }
+        </div>
+        <div className="reviews">
+          {
+            reviews.map((review) => (
+              <Review key={review.id} review={review} />
+            ))
           }
         </div>
       </main>
