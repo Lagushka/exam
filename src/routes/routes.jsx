@@ -2,7 +2,7 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import Form from './Form';
 
-import MainPage from './MainPage';
+import MainPage from './MainPage/MainPage';
 
 const routes = [
   {
