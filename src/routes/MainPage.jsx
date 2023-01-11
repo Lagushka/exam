@@ -10,6 +10,7 @@ export default function MainPage() {
   const [forms, setForms] = useState([]);
   const [filterOpened, setFilterOpened] = useState(false);
   const [questionsNum, setQuestionsNum] = useState(0);
+  const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
     axios.get('https://my-json-server.typicode.com/lagushka/termworkDB/forms/')
@@ -23,7 +24,10 @@ export default function MainPage() {
       <Header />
       <main>
         <h1>Анкеты</h1>
-        <button type="button" className="filter" onClick={() => setFilterOpened(true)}>Фильтры</button>
+        <div className="utils">
+          <button type="button" className="filter" onClick={() => setFilterOpened(true)}>Фильтры</button>
+          <input type="text" placeholder="Найти анкету" value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
+        </div>
         {
           filterOpened
             && (
@@ -33,7 +37,9 @@ export default function MainPage() {
         <span>Первый в мире сайт, где вы можете проходить анкеты. Это весело и интересно!</span>
         <div className="forms">
           {
-            forms.filter((form) => (+questionsNum === 0 || form.questions.length === +questionsNum))
+            forms.filter((form) => (
+              (+questionsNum === 0 || form.questions.length === +questionsNum))
+              && (!inputValue || form.name.toLowerCase().includes(inputValue.toLowerCase())))
               .map((form) => (
                 <button type="button" key={form.id} className="form" onClick={() => navigate(`/form/${form.id}`)}>
                   {form.name}
