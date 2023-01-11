@@ -1,0 +1,17 @@
+.review {
+  display: flex;
+  flex-direction: column;
+  background-color: #e5d4ff;
+  width: fit-content;
+  padding: 15px;
+  margin-top: 30px;
+  border-radius: 15px;
+}
+
+.review span {
+  font-size: 18px;
+}
+
+.review span, p {
+  font-family: 'PT Serif', serif;
+}

@@ -1,9 +1,14 @@
 import React from 'react';
 
-export default function Header() {
+import classes from './Header.module.css';
+
+export default function Header({ name, modalOpened, setModalOpened }) {
   return (
-    <header>
+    <header className={classes.header}>
       <a href="/">Главная</a>
+      {
+        name ? <span>{name}</span> : <button type="button" onClick={() => { setModalOpened(!modalOpened); }}>Логин</button>
+      }
     </header>
   );
 }

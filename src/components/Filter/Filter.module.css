@@ -1,0 +1,22 @@
+.filter {
+  position: fixed;
+  background-color: #e8d9ff;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter input {
+  width: 45px;
+}
+
+.closeButton {
+  padding: 2px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+}

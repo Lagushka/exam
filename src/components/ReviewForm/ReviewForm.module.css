@@ -1,0 +1,17 @@
+.makeReview {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.makeReview label, .makeReview button {
+  margin-top: 20px;
+}
+
+.makeReview input, .makeReview textarea {
+  margin-top: 10px;
+}
+
+.makeReview textarea {
+  resize: none;
+}

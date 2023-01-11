@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Header from '../components/Header/Header';
+import Modal from '../components/Modal/Modal';
 
 export default function Form() {
   const selectedForm = useParams().id;
@@ -14,9 +15,16 @@ export default function Form() {
         setFormData(response.data);
       });
   }, []);
+
+  const [name, setName] = useState('');
+  const [modalOpened, setModalOpened] = useState(false);
   return (
-    <div className="form">
-      <Header />
+    <div className="Page">
+      <Header
+        name={name}
+        modalOpened={modalOpened}
+        setModalOpened={setModalOpened}
+      />
       <main>
         <h1>{formData.name}</h1>
         <form className="form__questions">
@@ -28,9 +36,12 @@ export default function Form() {
               </div>
             ))
           }
-          <input type="submit" value="Отправить" />
+          <button type="submit">Отправить</button>
         </form>
       </main>
+      {
+        modalOpened && <Modal setName={setName} setModalOpened={setModalOpened} />
+      }
     </div>
   );
 }

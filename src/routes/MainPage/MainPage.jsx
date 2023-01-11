@@ -8,6 +8,9 @@ import Filter from '../../components/Filter/Filter';
 import upArrow from './static/up.svg';
 import downArrow from './static/down.svg';
 import Review from '../../components/Review/Review';
+import ReviewForm from '../../components/ReviewForm/ReviewForm';
+import Modal from '../../components/Modal/Modal';
+import classes from './MainPage.module.css';
 
 export default function MainPage() {
   const [forms, setForms] = useState([]);
@@ -17,6 +20,8 @@ export default function MainPage() {
   const [inputValue, setInputValue] = useState('');
   const [sortDown, setSortDown] = useState(false);
   const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [modalOpened, setModalOpened] = useState(false);
   useEffect(() => {
     axios.get('https://my-json-server.typicode.com/lagushka/termworkDB/forms/')
       .then((response) => {
@@ -42,16 +47,20 @@ export default function MainPage() {
   }
 
   return (
-    <div className="App">
-      <Header />
-      <main>
+    <div className="Page">
+      <Header
+        name={name}
+        modalOpened={modalOpened}
+        setModalOpened={setModalOpened}
+      />
+      <main className={classes.main}>
         <h1>Анкеты</h1>
-        <div className="utils">
+        <div className={classes.utils}>
           <button type="button" className="filter" onClick={() => setFilterOpened(true)}>Фильтры</button>
           <input type="text" placeholder="Найти анкету" value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
-          <button type="button" className="sort" onClick={() => sort()}>
+          <button type="button" className={classes.sort} onClick={() => sort()}>
             <span>Сортировка</span>
-            <img src={sortDown ? downArrow : upArrow} alt="" />
+            <img src={sortDown ? downArrow : upArrow} alt="" height="20" />
           </button>
         </div>
         {
@@ -60,27 +69,33 @@ export default function MainPage() {
             <Filter setFilterOpened={setFilterOpened} setQuestionsNum={setQuestionsNum} />
             )
         }
-        <span>Первый в мире сайт, где вы можете проходить анкеты. Это весело и интересно!</span>
-        <div className="forms">
+        <p className={classes.desc}>
+          Первый в мире сайт, где вы можете проходить анкеты. Это весело и интересно!
+        </p>
+        <div className={classes.forms}>
           {
             forms.filter((form) => (
               (+questionsNum === 0 || form.questions.length === +questionsNum))
               && (!inputValue || form.name.toLowerCase().includes(inputValue.toLowerCase())))
               .map((form) => (
-                <button type="button" key={form.id} className="form" onClick={() => navigate(`/form/${form.id}`)}>
+                <button type="button" key={form.id} className={classes.form} onClick={() => navigate(`/form/${form.id}`)}>
                   {form.name}
                 </button>
               ))
           }
         </div>
-        <div className="reviews">
+        <div className={classes.reviews}>
           {
             reviews.map((review) => (
               <Review key={review.id} review={review} />
             ))
           }
         </div>
+        <ReviewForm reviews={reviews} setReviews={setReviews} />
       </main>
+      {
+        modalOpened && <Modal setName={setName} setModalOpened={setModalOpened} />
+      }
     </div>
   );
 }

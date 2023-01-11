@@ -1,0 +1,40 @@
+.Page {
+  position: static;
+}
+
+.utils {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.utils input, .utils button {
+  margin-right: 30px;
+}
+
+.sort {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.desc {
+  font-size: 22px;
+  text-align: center;
+  font-family: 'PT Serif', serif;
+}
+
+.forms {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.form {
+  margin: 15px 10px;
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+}
